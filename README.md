@@ -30,7 +30,7 @@ This guarantees that you will always use the latest version of the library.
 
 If, instead, you'd like to include the latest version explicitly, you can add the following tag:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@twemoji/api@17.0.2/dist/twemoji.min.js" integrity="sha384-ffx6atwP+2a1uHhw+XT6uAGhdssJviyWfbhOgvzJqE1X+qUM1Aq3mS3WW70vSq6S" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@twemoji/api@17.0.3/dist/twemoji.min.js" integrity="sha384-Y5xukbGJwykbHHkTbLJykYLcBPFxrwipTbEh0puxhkz9CZ90raTPGe2Ks4vCxsYU" crossorigin="anonymous"></script>
 ```
 
 ### Download
