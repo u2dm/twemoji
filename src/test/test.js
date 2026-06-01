@@ -550,7 +550,7 @@ wru.test([{
   name: 'unnecessary vs16s',
   test: function () {
     wru.assert('are not parsed in strings',
-     /^<img.*>\ufe0f$/.test(twemoji.parse('\ud83d\ude10\ufe0f')) 
+     /^<img.*>\ufe0f$/.test(twemoji.parse('\ud83d\ude10\ufe0f'))
     );
 
     var div = document.createElement('div');
@@ -558,6 +558,42 @@ wru.test([{
     twemoji.parse(div);
     wru.assert('are not parsed in nodes',
       div.children.length === 1 && div.innerText === '\ufe0f'
+    );
+  }
+},{
+  // All Emoji_Presentation=No emoji should only render as emoji when
+  // paired with VS16. See [the spec](https://unicode.org/reports/tr51/proposed.html#Presentation_Style)
+  // and https://github.com/jdecked/twemoji/issues/157 for more info.
+  name: 'directional arrow variation selectors',
+  test: function () {
+    // U+2197 + VS16 should render as 2197.png
+    var div = document.createElement('div');
+    div.innerHTML = '\u2197\ufe0f';
+    twemoji.parse(div);
+    wru.assert(
+      'U+2197 with VS16 is rendered as emoji',
+      div.firstChild &&
+      div.firstChild.className === 'emoji' &&
+      div.firstChild.getAttribute('alt') === '\u2197\ufe0f' &&
+      div.firstChild.src.indexOf('72x72/2197.png') !== -1
+    );
+
+    // U+2197 + VS15 text presentation, should not render emoji
+    div = document.createElement('div');
+    div.innerHTML = '\u2197\ufe0e';
+    twemoji.parse(div);
+    wru.assert(
+      'U+2197 with VS15 is not rendered (text presentation)',
+      div.innerHTML === '\u2197\ufe0e'
+    );
+
+    // Bare U+2197 defaults to text, should not render emoji
+    div = document.createElement('div');
+    div.innerHTML = '\u2197';
+    twemoji.parse(div);
+    wru.assert(
+      'bare U+2197 is not rendered (defaults to text)',
+      div.innerHTML === '\u2197'
     );
   }
 },{
